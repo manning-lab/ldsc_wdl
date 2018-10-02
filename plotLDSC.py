@@ -32,15 +32,18 @@ def readLDSCfiles(fnames):
 
 # Code to run
 parser = argparse.ArgumentParser(description='Plot results of LDSC',formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument('--results', nargs='?', type=str, default="", help='comma separated list of result files from LDSC')
-parser.add_argument('--labels', nargs='?', type=str, default="", help='comma separated list of labels for each LDSC analysis')
+parser.add_argument('--results', nargs=1, type=str, default="", help='comma separated list of result files from LDSC')
+parser.add_argument('--labels', nargs=1, type=str, default="", help='comma separated list of labels for each LDSC analysis')
 parser.add_argument('--outpref', nargs='?', type=str, default="", help='output file preference')
 
 args = parser.parse_args()
 
-fnames = args.results
-fnames = fnames.replace(" ", None).split(",")
+fnames = args.results[0].replace(" ", "").split(",")
+
+labels = args.labels[0].replace(" ", "").split(",")
 alldat, enr, pvals, ylabs = readLDSCfiles(fnames)
 
-# plotHeatmap(enr, args.outpref+".png", args.labels, ylabs)
-plotClustermap(enr, args.outpref+".png", args.labels, ylabs)
+if np.shape(enr)[1] == 1:
+	plotHeatmap(enr, args.outpref+".png", args.labels, ylabs)
+else:
+	plotClustermap(enr, args.outpref+".png", labels, ylabs)
