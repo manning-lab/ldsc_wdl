@@ -9,21 +9,26 @@ import argparse
 
 # Functions
 def plotHeatmap(data, fname, xlabs, ylabs):
-    fig = plt.figure(figsize=(3*len(xlabs), len(ylabs)))
-    sns.set(style="white", font_scale = 2)
-    sns.heatmap(data, xticklabels = xlabs, yticklabels = ylabs, cmap="inferno", cbar_kws = {"fraction":0.5, "shrink":0.5})
-    plt.xticks(rotation=90)
-    fig.savefig(fname = fname, bbox_inches = 'tight', pad_inches = 1)
+	fig = plt.figure(figsize=(3*len(xlabs), len(ylabs)))
+	sns.set(style="white", font_scale = 2)
+	sns.heatmap(data, xticklabels = xlabs, yticklabels = ylabs, cmap="inferno", cbar_kws = {"fraction":0.5, "shrink":0.5})
+	plt.xticks(rotation=90)
+	fig.savefig(fname = fname, bbox_inches = 'tight', pad_inches = 1)
+
+def plotClustermap(data, fname, xlabs, ylabs):
+	sns.set(style="white", font_scale = 2)
+	fig = sns.clustermap(data, figsize = (3*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cmap="inferno", cbar_kws = {"fraction":0.5, "shrink":0.5})
+	fig.savefig(fname = fname, bbox_inches = 'tight', pad_inches = 1)
 
 def readLDSCfiles(fnames):
-    alldat = [pd.read_csv(f, delim_whitespace=True) for f in fnames]
-    enr = np.concatenate([d[['Enrichment']].fillna(0).values for d in alldat], 1)
-    pvals = -np.log(np.concatenate([d[['Enrichment_p']].fillna(1).values for d in alldat], 1))
-    op = np.argsort(-np.mean(pvals,1))
-    pvals = pvals[op]
-    enr = enr[op]
-    ylabs = [l.split("_0")[0] for l in alldat[0]['Category'][op]]
-    return alldat, enr, pvals, ylabs
+	alldat = [pd.read_csv(f, delim_whitespace=True) for f in fnames]
+	enr = np.concatenate([d[['Enrichment']].fillna(0).values for d in alldat], 1)
+	pvals = -np.log(np.concatenate([d[['Enrichment_p']].fillna(1).values for d in alldat], 1))
+	op = np.argsort(-np.mean(pvals,1))
+	pvals = pvals[op]
+	enr = enr[op]
+	ylabs = [l.split("_0")[0] for l in alldat[0]['Category'][op]]
+	return alldat, enr, pvals, ylabs
 
 # Code to run
 parser = argparse.ArgumentParser(description='Plot results of LDSC',formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -37,4 +42,5 @@ fnames = args.results
 fnames = fnames.replace(" ", None).split(",")
 alldat, enr, pvals, ylabs = readLDSCfiles(fnames)
 
-plotHeatmap(enr, args.outpref+".png", args.labels, ylabs)
+# plotHeatmap(enr, args.outpref+".png", args.labels, ylabs)
+plotClustermap(enr, args.outpref+".png", args.labels, ylabs)
