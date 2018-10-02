@@ -18,7 +18,7 @@ def plotHeatmap(data, fname, xlabs, ylabs):
 
 def plotClustermap(data, fname, xlabs, ylabs):
 	sns.set(style="white", font_scale = 2)
-	fig = sns.clustermap(data, figsize = (3*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cmap="inferno", cbar_kws = {"fraction":0.5, "shrink":0.5})
+	fig = sns.clustermap(data, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cmap="inferno", cbar_kws = {"fraction":0.5, "shrink":0.5})
 	fig.savefig(fname = fname, bbox_inches = 'tight', pad_inches = 1)
 
 def readLDSCfiles(fnames):
