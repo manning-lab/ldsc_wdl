@@ -32,9 +32,9 @@ def readLDSCfiles(fnames):
 
 # Code to run
 parser = argparse.ArgumentParser(description='Plot results of LDSC',formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument('--results', nargs='1', type=str, default="", help='comma separated list of result files from LDSC')
-parser.add_argument('--labels', nargs='1', type=str, default="", help='comma separated list of labels for each LDSC analysis')
-parser.add_argument('--outpref', nargs='1', type=str, default="", help='output file preference')
+parser.add_argument('--results', nargs='?', type=str, default="", help='comma separated list of result files from LDSC')
+parser.add_argument('--labels', nargs='?', type=str, default="", help='comma separated list of labels for each LDSC analysis')
+parser.add_argument('--outpref', nargs='?', type=str, default="", help='output file preference')
 
 args = parser.parse_args()
 
