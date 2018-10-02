@@ -1,10 +1,10 @@
 # Packages
 import pandas as pd
 import numpy as np
-import seaborn as sns
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import seaborn as sns
 from pprint import pprint
 import argparse
 
