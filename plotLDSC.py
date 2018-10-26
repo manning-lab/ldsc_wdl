@@ -45,6 +45,8 @@ labels = args.labels[0].replace(" ", "").split(",")
 alldat, enr, pvals, ylabs = readLDSCfiles(fnames)
 
 if np.shape(enr)[1] == 1:
-	plotHeatmap(enr, args.outpref+".png", args.labels, ylabs)
+	plotHeatmap(enr, args.outpref+"enrichment.png", args.labels, ylabs)
+	plotHeatmap(pvals, args.outpref+"pvalues.png", args.labels, ylabs)
 else:
-	plotClustermap(enr, args.outpref+".png", labels, ylabs)
+	plotClustermap(enr, args.outpref+"enrichment.png", labels, ylabs)
+	plotClustermap(pvals, args.outpref+"pvalues.png", labels, ylabs)
