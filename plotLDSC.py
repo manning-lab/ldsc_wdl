@@ -17,7 +17,6 @@ def plotHeatmap(data, fname, xlabs, ylabs):
 	fig.savefig(fname = fname, bbox_inches = 'tight', pad_inches = 1)
 
 def plotClustermap(enr, pvals, fname, xlabs, ylabs):
-	def plotClustermap(enr, pvals, fname, xlabs, ylabs):
 	sns.set(style="white", font_scale = 4)
 	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cmap="inferno", cbar_kws = {"fraction":0.5, "shrink":0.5})
 	row_order = fig.dendrogram_row.reordered_ind
