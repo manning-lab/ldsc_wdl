@@ -54,7 +54,7 @@ alldat, enr, pvals, ylabs = readLDSCfiles(fnames)
 
 nominal = np.min(pvals,1) < args.pthresh
 pvals = pvals[nominal,:]
-enr = pvals[nominal,:]
+enr = enr[nominal,:]
 ylabs = [y for i, y in enumerate(ylabs) if nominal[i]]
 
 
