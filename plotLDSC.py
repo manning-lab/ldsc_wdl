@@ -52,7 +52,7 @@ fnames = args.results[0].replace(" ", "").split(",")
 labels = args.labels[0].replace(" ", "").split(",")
 alldat, enr, pvals, ylabs = readLDSCfiles(fnames)
 
-nominal = np.min(pvals,1) < pthresh
+nominal = np.min(pvals,1) < args.pthresh
 pvals = pvals[nominal,:]
 enr = pvals[nominal,:]
 ylabs = [y for i, y in enumerate(ylabs) if nominal[i]]
