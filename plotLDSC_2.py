@@ -27,6 +27,21 @@ def plotClustermap(enr, pvals, fname, xlabs, ylabs):
 	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.5}, annot = pvals)
 	fig.savefig(fname = fname+".enrichment.png", bbox_inches = 'tight', pad_inches = 1)
 
+def plotClustermapTranspose(enr, pvals, fname, xlabs, ylabs):
+	enr = np.transpose(enr)
+	pvals = np.transpose(pvals)
+	xl = ylabs
+	ylabs = xlabs
+	xlabs = xl
+	cm = "hot_r"
+	sns.set(style="white", font_scale = 4)
+	fig0 = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.5})
+	row_order = fig0.dendrogram_row.reordered_ind
+	col_order = fig0.dendrogram_col.reordered_ind
+	pvals = pvals[:, col_order][row_order]
+	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.5}, annot = pvals)
+	fig.savefig(fname = fname+".enrichment.png", bbox_inches = 'tight', pad_inches = 1)
+
 def readLDSCfiles(fnames):
 	alldat = [pd.read_csv(f, delim_whitespace=True) for f in fnames]
 	enr = np.concatenate([d[['Enrichment']].fillna(0).values for d in alldat], 1)
@@ -61,4 +76,5 @@ if np.shape(enr)[1] == 1:
 	plotHeatmap(enr, args.outpref+"enrichment.png", args.labels, ylabs)
 	plotHeatmap(pvals, args.outpref+"pvalues.png", args.labels, ylabs)
 else:
-	plotClustermap(enr, pvals, args.outpref, labels, ylabs)
+	# plotClustermap(enr, pvals, args.outpref, labels, ylabs)
+	plotClustermapTranspose(enr, pvals, args.outpref, labels, ylabs)
