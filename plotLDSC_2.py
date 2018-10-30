@@ -20,14 +20,16 @@ def plotHeatmap(data, fname, xlabs, ylabs):
 def plotClustermap(enr, pvals, fname, xlabs, ylabs):
 	cm = "hot_r"
 	sns.set(style="white", font_scale = 4)
-	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.5}, annot = pvals)
-	# row_order = fig0.dendrogram_row.reordered_ind
-	# col_order = fig0.dendrogram_col.reordered_ind
+	fig0 = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.5})
+	row_order = fig0.dendrogram_row.reordered_ind
+	col_order = fig0.dendrogram_col.reordered_ind
 	# fig.savefig(fname = fname+".enrichment.png", bbox_inches = 'tight', pad_inches = 1)
 	# enr = enr[:, col_order][row_order]
 	# fig = plt.figure(figsize=(5*len(xlabs), len(ylabs)))
 	# sns.heatmap(enr, xticklabels = [xlabs[c] for c in col_order], yticklabels = [ylabs[r] for r in row_order], cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.5}, annot = True)
 	# plt.xticks(rotation=90)
+	pvals = pvals[:, col_order][row_order]
+	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.5}, annot = pvals)
 	fig.savefig(fname = fname+".enrichment.png", bbox_inches = 'tight', pad_inches = 1)
 	# pvals = pvals[:, col_order][row_order]
 	# fig2 = plt.figure(figsize=(5*len(xlabs), len(ylabs)))
