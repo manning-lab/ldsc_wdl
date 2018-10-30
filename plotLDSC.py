@@ -26,7 +26,7 @@ def plotClustermap(enr, pvals, fname, xlabs, ylabs):
 	fig.savefig(fname = fname+".enrichment.png", bbox_inches = 'tight', pad_inches = 1)
 	pvals = pvals[:, col_order][row_order]
 	fig2 = plt.figure(figsize=(5*len(xlabs), len(ylabs)))
-	sns.heatmap(pvals, xticklabels = [xlabs[c] for c in col_order], yticklabels = [ylabs[r] for r in row_order], cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.5}, annot = True)
+	sns.heatmap(pvals, xticklabels = [xlabs[c] for c in col_order], yticklabels = [ylabs[r] for r in row_order], cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.5, "location":"left"}, annot = True)
 	plt.xticks(rotation=90)
 	fig2.savefig(fname = fname+".pvalues.png", bbox_inches = 'tight', pad_inches = 1)
 
