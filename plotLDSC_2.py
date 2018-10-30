@@ -23,7 +23,7 @@ def plotClustermap(enr, pvals, fname, xlabs, ylabs):
 	row_order = fig0.dendrogram_row.reordered_ind
 	col_order = fig0.dendrogram_col.reordered_ind
 	pvals = pvals[:, col_order][row_order]
-	sns.set(style="white", font_scale = 6)
+	sns.set(style="white", font_scale = 4)
 	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.5}, annot = pvals)
 	fig.savefig(fname = fname+".enrichment.png", bbox_inches = 'tight', pad_inches = 1)
 
