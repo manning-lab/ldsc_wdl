@@ -20,7 +20,7 @@ def plotHeatmap(data, fname, xlabs, ylabs):
 def plotClustermap(enr, pvals, fname, xlabs, ylabs):
 	cm = "YlOrRd"
 	sns.set(style="white", font_scale = 4)
-	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.5})
+	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.5}, annot = True)
 	row_order = fig.dendrogram_row.reordered_ind
 	col_order = fig.dendrogram_col.reordered_ind
 	fig.savefig(fname = fname+".enrichment.png", bbox_inches = 'tight', pad_inches = 1)
