@@ -10,21 +10,23 @@ import argparse
 
 # Functions
 def plotHeatmap(data, fname, xlabs, ylabs):
+	cm = "YlOrRd"
 	fig = plt.figure(figsize=(3*len(xlabs), len(ylabs)))
 	sns.set(style="white", font_scale = 2)
-	sns.heatmap(data, xticklabels = xlabs, yticklabels = ylabs, cmap="inferno", cbar_kws = {"fraction":0.5, "shrink":0.5})
+	sns.heatmap(data, xticklabels = xlabs, yticklabels = ylabs, cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.5})
 	plt.xticks(rotation=90)
 	fig.savefig(fname = fname, bbox_inches = 'tight', pad_inches = 1)
 
 def plotClustermap(enr, pvals, fname, xlabs, ylabs):
+	cm = "YlOrRd"
 	sns.set(style="white", font_scale = 4)
-	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cmap="inferno", cbar_kws = {"fraction":0.5, "shrink":0.5})
+	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.5})
 	row_order = fig.dendrogram_row.reordered_ind
 	col_order = fig.dendrogram_col.reordered_ind
 	fig.savefig(fname = fname+".enrichment.png", bbox_inches = 'tight', pad_inches = 1)
 	pvals = pvals[:, col_order][row_order]
 	fig2 = plt.figure(figsize=(5*len(xlabs), len(ylabs)))
-	sns.heatmap(pvals, xticklabels = [xlabs[c] for c in col_order], yticklabels = [ylabs[r] for r in row_order], cmap="inferno", cbar_kws = {"fraction":0.5, "shrink":0.5})
+	sns.heatmap(pvals, xticklabels = [xlabs[c] for c in col_order], yticklabels = [ylabs[r] for r in row_order], cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.5})
 	plt.xticks(rotation=90)
 	fig2.savefig(fname = fname+".pvalues.png", bbox_inches = 'tight', pad_inches = 1)
 
@@ -52,7 +54,7 @@ fnames = args.results[0].replace(" ", "").split(",")
 labels = args.labels[0].replace(" ", "").split(",")
 alldat, enr, pvals, ylabs = readLDSCfiles(fnames)
 
-nominal = np.min(pvals,1) < args.pthresh
+nominal = np.min(pvals,1) > -np.log(args.pthresh)
 pvals = pvals[nominal,:]
 enr = enr[nominal,:]
 ylabs = [y for i, y in enumerate(ylabs) if nominal[i]]
