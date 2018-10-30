@@ -10,7 +10,7 @@ import argparse
 
 # Functions
 def plotHeatmap(data, fname, xlabs, ylabs):
-	cm = "YlOrRd"
+	cm = "hot_r"
 	fig = plt.figure(figsize=(3*len(xlabs), len(ylabs)))
 	sns.set(style="white", font_scale = 2)
 	sns.heatmap(data, xticklabels = xlabs, yticklabels = ylabs, cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.5})
@@ -18,7 +18,7 @@ def plotHeatmap(data, fname, xlabs, ylabs):
 	fig.savefig(fname = fname, bbox_inches = 'tight', pad_inches = 1)
 
 def plotClustermap(enr, pvals, fname, xlabs, ylabs):
-	cm = "YlOrRd"
+	cm = "hot_r"
 	sns.set(style="white", font_scale = 4)
 	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.5}, annot = True)
 	row_order = fig.dendrogram_row.reordered_ind
