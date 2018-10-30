@@ -32,11 +32,13 @@ def readLDSCfiles(fnames):
 	alldat = [pd.read_csv(f, delim_whitespace=True) for f in fnames]
 	enr = np.concatenate([d[['Enrichment']].fillna(0).values for d in alldat], 1)
 	pvals = -np.log(np.concatenate([d[['Enrichment_p']].fillna(1).values for d in alldat], 1))
+	enr_er = np.concatenate([d[['Enrichment_std_error']].fillna(0).values for d in alldat], 1)
 	op = np.argsort(-np.mean(pvals,1))
 	pvals = pvals[op]
 	enr = enr[op]
+	enr_er = enr_er[op]
 	ylabs = [l.split("_0")[0] for l in alldat[0]['Category'][op]]
-	return alldat, enr, pvals, ylabs
+	return alldat, enr, pvals, enr_er, ylabs
 
 # Code to run
 parser = argparse.ArgumentParser(description='Plot results of LDSC',formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -44,18 +46,26 @@ parser.add_argument('--results', nargs=1, type=str, default="", help='comma sepa
 parser.add_argument('--labels', nargs=1, type=str, default="", help='comma separated list of labels for each LDSC analysis')
 parser.add_argument('--outpref', nargs='?', type=str, default="", help='output file preference')
 parser.add_argument('--pthresh', nargs='?', type=float, default=0.05, help='pvalue threshold for plotting')
+parser.add_argument('--ethresh', nargs='?', type=float, default=np.inf, help='enrichment std error threshold for plotting')
 
 args = parser.parse_args()
 
 fnames = args.results[0].replace(" ", "").split(",")
 
 labels = args.labels[0].replace(" ", "").split(",")
-alldat, enr, pvals, ylabs = readLDSCfiles(fnames)
+alldat, enr, pvals, enr_er, ylabs = readLDSCfiles(fnames)
 
 nominal = np.max(pvals,1) > -np.log(args.pthresh)
 pvals = pvals[nominal,:]
 enr = enr[nominal,:]
+enr_er = enr_er[nominal,:]
 ylabs = [y for i, y in enumerate(ylabs) if nominal[i]]
+
+abv_error = np.max(enr_er,1) < args.ethresh
+pvals = pvals[abv_error,:]
+enr = enr[abv_error,:]
+enr_er = enr_er[abv_error,:]
+ylabs = [y for i, y in enumerate(ylabs) if abv_error[i]]
 
 
 if np.shape(enr)[1] == 1:
