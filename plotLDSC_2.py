@@ -19,11 +19,11 @@ def plotHeatmap(data, fname, xlabs, ylabs):
 
 def plotClustermap(enr, pvals, fname, xlabs, ylabs):
 	cm = "hot_r"
+	sns.set(style="white", font_scale = 2)
 	fig0 = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.5})
 	row_order = fig0.dendrogram_row.reordered_ind
 	col_order = fig0.dendrogram_col.reordered_ind
 	pvals = pvals[:, col_order][row_order]
-	sns.set(style="white", font_scale = 4)
 	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.5}, annot = pvals)
 	fig.savefig(fname = fname+".enrichment.png", bbox_inches = 'tight', pad_inches = 1)
 
