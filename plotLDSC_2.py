@@ -19,12 +19,14 @@ def plotHeatmap(data, fname, xlabs, ylabs):
 
 def plotClustermap(enr, pvals, fname, xlabs, ylabs):
 	cm = "hot_r"
-	sns.set(style="white", font_scale = 2)
+	rc={'axes.labelsize': 12, 'font.size': 48, 'legend.fontsize': 12, 'axes.titlesize': 12}
+	sns.set(rc = rc, style="white", font_scale=2)
 	fig0 = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cmap=cm, cbar_kws = {"fraction":0.5, "shrink":0.8})
 	row_order = fig0.dendrogram_row.reordered_ind
 	col_order = fig0.dendrogram_col.reordered_ind
 	pvals = pvals[:, col_order][row_order]
-	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs,cbar_kws = {"fraction":1.0, "shrink":1.5}, cmap=cm, annot = pvals)
+	ticks = [0, np.ceil(np.mean(enr)), np.floor(np.max(enr))]
+	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cbar_kws = {"fraction":2.0, "shrink":1.5, "ticks":ticks}, cmap=cm, annot = pvals, annot_kws={"size": 20})
 	fig.savefig(fname = fname+".enrichment.png", bbox_inches = 'tight', pad_inches = 1)
 
 
