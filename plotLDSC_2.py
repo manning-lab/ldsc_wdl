@@ -26,7 +26,7 @@ def plotClustermap(enr, pvals, fname, xlabs, ylabs):
 	col_order = fig0.dendrogram_col.reordered_ind
 	pvals = pvals[:, col_order][row_order]
 	ticks = [0, np.floor(np.max(enr)/2.0), np.floor(np.max(enr))]
-	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cbar_kws = {"fraction":2.0, "shrink":1.5, "ticks":ticks}, cmap=cm, annot = pvals, annot_kws={"size": 20})
+	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cbar_kws = {"fraction":2.0, "shrink":1.5, "ticks":ticks}, cmap=cm, annot = pvals, annot_kws={"size": 24})
 	fig.savefig(fname = fname+".enrichment.png", bbox_inches = 'tight', pad_inches = 1)
 
 
