@@ -28,7 +28,8 @@ def plotClustermap(enr, pvals, fname, xlabs, ylabs):
 	pvals = pvals[:, col_order][row_order]
 	# ticks = [0, np.floor(np.max(enr)/2.0), np.floor(np.max(enr))]
 	# fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cbar_kws = {"fraction":2.0, "shrink":1.5, "ticks":ticks}, cmap=cm, annot = pvals, annot_kws={"size": 24})
-	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cbar_kws = {"fraction":2.0, "shrink":1.5}, cmap=cm, annot = pvals)
+	# fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cbar_kws = {"fraction":2.0, "shrink":1.5}, cmap=cm, annot = pvals)
+	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cbar_kws = {"fraction":2.0, "shrink":1.5}, cmap=cm)
 	fig.savefig(fname = fname+".enrichment.png", bbox_inches = 'tight', pad_inches = 1)
 
 
