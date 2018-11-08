@@ -26,10 +26,10 @@ def plotClustermap(enr, pvals, fname, xlabs, ylabs):
 	row_order = fig0.dendrogram_row.reordered_ind
 	col_order = fig0.dendrogram_col.reordered_ind
 	pvals = pvals[:, col_order][row_order]
-	annot = np.zeros(np.shape(pvals), dtype = "<S3")
-	annot[pvals > 4.6] = "*"
-	annot[pvals > 6.9] = "**"
-	annot[pvals > 9.2] = "***"
+	annot = np.zeros(np.shape(pvals), dtype = "<S4")
+	annot[pvals > 2.99] = "*"
+	annot[pvals > 4.6] = "**"
+	annot[pvals > 6.9] = "***"
 
 	# ticks = [0, np.floor(np.max(enr)/2.0), np.floor(np.max(enr))]
 	# fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cbar_kws = {"fraction":2.0, "shrink":1.5, "ticks":ticks}, cmap=cm, annot = pvals, annot_kws={"size": 24})
