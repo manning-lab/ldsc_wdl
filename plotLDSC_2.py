@@ -17,7 +17,7 @@ def plotHeatmap(data, fname, xlabs, ylabs):
 	plt.xticks(rotation=90)
 	fig.savefig(fname = fname, bbox_inches = 'tight', pad_inches = 1)
 
-def plotClustermap(enr, pvals, fname, xlabs, ylabs, pthresh):
+def plotClustermap(enr, pvals, fname, xlabs, ylabs):
 	cm = "hot_r"
 	# rc={'axes.labelsize': 12, 'font.size': 48, 'legend.fontsize': 12, 'axes.titlesize': 12}
 	# sns.set(rc = rc, style="white", font_scale=3)
