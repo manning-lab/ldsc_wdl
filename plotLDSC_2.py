@@ -82,5 +82,5 @@ if np.shape(enr)[1] == 1:
 	plotHeatmap(enr, args.outpref+"enrichment.png", args.labels, ylabs)
 	plotHeatmap(pvals, args.outpref+"pvalues.png", args.labels, ylabs)
 else:
-	if np.shape(enr)[0] > 0:
+	if np.shape(enr)[0] > 1:
 		plotClustermap(enr, pvals, args.outpref, labels, ylabs)
