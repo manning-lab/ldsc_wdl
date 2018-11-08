@@ -17,7 +17,7 @@ def plotHeatmap(data, fname, xlabs, ylabs):
 	plt.xticks(rotation=90)
 	fig.savefig(fname = fname, bbox_inches = 'tight', pad_inches = 1)
 
-def plotClustermap(enr, pvals, fname, xlabs, ylabs):
+def plotClustermap(enr, pvals, fname, xlabs, ylabs, pthresh):
 	cm = "hot_r"
 	# rc={'axes.labelsize': 12, 'font.size': 48, 'legend.fontsize': 12, 'axes.titlesize': 12}
 	# sns.set(rc = rc, style="white", font_scale=3)
@@ -26,10 +26,16 @@ def plotClustermap(enr, pvals, fname, xlabs, ylabs):
 	row_order = fig0.dendrogram_row.reordered_ind
 	col_order = fig0.dendrogram_col.reordered_ind
 	pvals = pvals[:, col_order][row_order]
+	annot = np.chararray(np.shape(pvals))
+	annot[pvals > 4.6] = "*"
+	annot[pvals > 6.9] = "**"
+	annot[pvals > 9.2] = "***"
+
+
 	# ticks = [0, np.floor(np.max(enr)/2.0), np.floor(np.max(enr))]
 	# fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cbar_kws = {"fraction":2.0, "shrink":1.5, "ticks":ticks}, cmap=cm, annot = pvals, annot_kws={"size": 24})
-	# fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cbar_kws = {"fraction":2.0, "shrink":1.5}, cmap=cm, annot = pvals)
-	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cbar_kws = {"fraction":2.0, "shrink":1.5}, cmap=cm)
+	# fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cbar_kws = {"fraction":2.0, "shrink":1.5}, cmap=cm)
+	fig = sns.clustermap(enr, figsize = (5*len(xlabs), len(ylabs)), xticklabels = xlabs, yticklabels = ylabs, cbar_kws = {"fraction":2.0, "shrink":1.5}, cmap=cm, annot = annot)
 	fig.savefig(fname = fname+".enrichment.png", bbox_inches = 'tight', pad_inches = 1)
 
 
