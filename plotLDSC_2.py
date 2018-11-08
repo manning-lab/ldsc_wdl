@@ -26,7 +26,7 @@ def plotClustermap(enr, pvals, fname, xlabs, ylabs):
 	row_order = fig0.dendrogram_row.reordered_ind
 	col_order = fig0.dendrogram_col.reordered_ind
 	pvals = pvals[:, col_order][row_order]
-	annot = np.chararray(np.shape(pvals))
+	annot = np.array(np.shape(pvals))
 	annot[pvals > 4.6] = "*"
 	annot[pvals > 6.9] = "**"
 	annot[pvals > 9.2] = "***"
