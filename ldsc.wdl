@@ -105,7 +105,7 @@ task plotResults {
 	Int memory
 
 	command <<<
-		python /ldsc_wdl/plotLDSC.py --results ${sep = "," result_files} --labels ${sep = "," column_labels} --outpref ${sep = "." column_labels} --pthresh ${default = "0.05", pvalue_threshold}
+		python /ldsc_wdl/plotLDSC.py --results ${sep = "," result_files} --labels ${sep = "," column_labels} --outpref ${sep = "." column_labels} --pthresh ${default = "0.05" pvalue_threshold}
 	>>>
 
 	runtime {
